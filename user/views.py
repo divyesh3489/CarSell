@@ -6,6 +6,7 @@ from .models import EmailVerificationToken, CustomUser
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.conf import settings
+import socket
 # Create your views here.
 
 
@@ -13,6 +14,7 @@ def register(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
             form = Registration(request.POST)
+            print(form.is_valid())
             if form.is_valid():
                 form.save()
                 newuser = form.cleaned_data['email']
@@ -20,7 +22,7 @@ def register(request):
                 token = default_token_generator.make_token(newuser)
                 EmailVerificationToken.objects.create(
                     user=newuser, token=token)
-                user_ip = get_client_ip(request)
+                user_ip = socket.gethostbyname(socket.gethostname())
                 verification_link = f"http://{user_ip}:8000/user/verify-email/{token}/"
                 subject = "Email Verification"
                 message = f"Click the following link to verify your email: {verification_link}"
@@ -78,10 +80,3 @@ def Logout(request):
         return redirect('user:login')
 
 
-def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip

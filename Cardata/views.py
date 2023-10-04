@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from .forms import Add_Car
-from .models import Carmodel, CarImage, CarData
+from .models import Carmodel, CarImage, CarData, Carbrand
 from django.views.generic.edit import CreateView
 from django.http import JsonResponse
 import pickle
-from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 import datetime
 # Create your views here.
@@ -15,6 +14,7 @@ def index(request):
     return render(request, 'Cardata/index.html', {'cars': cars})
 
 
+@login_required
 def carform(request):
     form = Add_Car()
     if request.method == 'POST':
@@ -81,3 +81,22 @@ def get_price(request):
 def car_detalis(reuqest, pk):
     cars = CarData.objects.get(pk=pk)
     return render(reuqest, 'Cardata/details.html', {'cars': cars})
+
+
+def cardata(request):
+    cars = CarData.objects.all()
+    carbarnds = Carbrand.objects.all()
+    show_button = True
+    print(request.GET.getlist('carbrand'))
+    if request.GET.getlist('carbrand') or (request.GET.get('max') and request.GET.get('min')) or request.GET.get('city'):
+        cars = CarData.objects.filter(
+            carbrand__in=request.GET.getlist('carbrand')) & (CarData.objects.filter(price__gt=request.GET.get('min')) & CarData.objects.filter(price__lt=request.GET.get('max'))) & CarData.objects.filter(city=request.GET.get('city'))
+        if not request.GET.getlist('carbrand') and not request.GET.get('city'):
+            cars = CarData.objects.filter(price__gt=request.GET.get('min')) & CarData.objects.filter(price__lt=request.GET.get('max'))
+        if not request.GET.getlist('carbrand'):
+            cars = CarData.objects.filter(price__gt=request.GET.get(
+                'min')) & CarData.objects.filter(price__lt=request.GET.get('max')) & CarData.objects.filter(city=request.GET.get('city'))
+        if not request.GET.get('city'):
+            cars = CarData.objects.filter(
+                carbrand__in=request.GET.getlist('carbrand')) & (CarData.objects.filter(price__gt=request.GET.get('min')) & CarData.objects.filter(price__lt=request.GET.get('max')))
+    return render(request, 'Cardata/filter.html', {'cars': cars, 'show_button': show_button, "carbrand": carbarnds})

@@ -7,81 +7,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: "#da373d",
+          },
+        },
+      },
+    };
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+      }
+      </style>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@200;300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+
 </head>
-<script>
-  function showFilters() {
-    var fSection = document.getElementById("filterSection");
-    if (fSection.classList.contains("hidden")) {
-      fSection.classList.remove("hidden");
-      fSection.classList.add("block");
-    } else {
-      fSection.classList.add("hidden");
-    }
-  }
-  function closeFilterSection() {
-    var fSection = document.getElementById("filterSection");
-    fSection.classList.add("hidden");
-  }
-</script>
-<style>
-  .checkbox:checked+.check-icon {
-    display: flex;
-  }
-</style>
 
 <body>
 
-<nav
-  class="relative flex w-full flex-nowrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:flex-wrap lg:justify-start lg:py-4"
-  data-te-navbar-ref>
-  <div class="flex w-full flex-wrap items-center justify-between px-3">
-    <div class="ml-2">
-      <a class="text-xl text-neutral-800 dark:text-neutral-200" href="#">Navbar</a>
-    </div>
-    <!-- Hamburger button for mobile view -->
-    <button
-      class="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
-      type="button" data-te-collapse-init data-te-target="#navbarSupportedContent2"
-      aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
-      <!-- Hamburger icon -->
-      <span class="[&>svg]:w-7">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-7 w-7">
-          <path fill-rule="evenodd"
-            d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
-            clip-rule="evenodd" />
+  <nav class="bg-white border-gray-200 dark:bg-black font-['Michroma']">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="https://flowbite.com/" class="flex items-center">
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">WEECRAFT</span>
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button"
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+      aria-controls="navbar-default" aria-expanded="false">
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M1 1h15M1 7h15M1 13h15" />
         </svg>
-      </span>
-    </button>
-
-    <!-- Collapsible navbar container -->
-    <div class="!visible mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto"
-      id="navbarSupportedContent2" data-te-collapse-item>
-      <!-- Left links -->
-      <ul class="list-style-none mr-auto flex flex-col pl-0 lg:mt-1 lg:flex-row" data-te-navbar-nav-ref>
-        <!-- Home link -->
-        <li class="my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1" data-te-nav-item-ref>
-          <a class="active disabled:text-black/30 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-            aria-current="page" href="#" data-te-nav-link-ref>Home</a>
+      </button>
+      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul
+        class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-black dark:border-gray-700">
+       {% if show_button %}
+       <li>
+          <button
+            class="block py-2 pl-3 pr-4 text-white mb-3 rounded-lg lg:border-0 lg:text-white rounded md:bg-transparent hover:text-gray-400 md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+            type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example"
+            aria-controls="drawer-example">
+            APPLY FILTER
+          </button>
         </li>
-        <!-- Features link -->
-        <li class="mb-4 pl-2 lg:mb-0 lg:pl-0 lg:pr-1" data-te-nav-item-ref>
-          <a class="p-0 text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-            href="#" data-te-nav-link-ref>Features</a>
-        </li>
-        <!-- Pricing link -->
-        <li class="mb-4 pl-2 lg:mb-0 lg:pl-0 lg:pr-1" data-te-nav-item-ref>
-          <a class="p-0 text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-            href="#" data-te-nav-link-ref>Pricing</a>
-        </li>
-        <!-- Disabled link -->
-        <li class="mb-4 pl-2 lg:mb-0 lg:pl-0 lg:pr-1" data-te-nav-link-ref>
-          <a class="text-black/30 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400">Disabled</a>
-        </li>
-      </ul>
+        {%endif%}
+          <li>
+            <a href="{% url 'Cardata:cardata' %}"
+            class="block py-2 pl-3 pr-4 text-white mb-3 rounded-lg lg:border-0 lg:text-white rounded md:bg-transparent hover:text-gray-400 md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+              aria-current="page">BUY</a>
+          </li>
+          <li>
+            <a href="{% url 'Cardata:carform' %}"
+              class="block py-2 pl-3 pr-4 text-white mb-3 rounded-lg lg:border-0 lg:text-white rounded md:bg-transparent hover:text-gray-400 md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+              aria-current="page">SELL</a>
+          </li>
+          {% if not user.is_authenticated %}
+          <li>
+            <a href="{% url 'user:register' %}"
+              class="block py-2 pl-3 pr-4 text-white mb-3 rounded-lg lg:border-0 lg:text-white rounded md:bg-transparent hover:text-gray-400 md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+              aria-current="page">SIGN-UP</a>
+          </li>
+          <li>
+            <a href="{% url 'user:login' %}"
+              class="block py-2 pl-3 pr-4 text-white mb-3 rounded-lg lg:border-0 lg:text-white rounded md:bg-transparent hover:text-gray-400 md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+              aria-current="page">LOGIN</a>
+            {% else %}
+            <a href="{% url 'user:logout' %}"
+              class="block py-2 pl-3 pr-4 text-white mb-3 rounded-lg lg:border-0 lg:text-white rounded md:bg-transparent hover:text-gray-400 md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+              aria-current="page">LOGOUT</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-
+  </nav>
+    
   {% block body %}
   {% endblock %}
 </body>

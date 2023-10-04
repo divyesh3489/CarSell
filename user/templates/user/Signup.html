@@ -1,15 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% extends 'Cardata/base.html' %}
+{% block body %}
 <body>
-    <form method="post">
-        {% csrf_token %}
-        {{form}}
-        <input type="submit" value="submit">
-    </form>
+    <section class="">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            <div class="flex flex-row items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ">
+            <div class=" w-full bg-white md:mt-0 sm:max-w-md xl:p-0">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8 shadow-3xl">
+                    <h1 class="text-xl  text-gray-900 md:text-2xl text-center font-bold font-['Michroma']">
+                        Sign-Up
+                    </h1>
+                    <form class="space-y-4 md:space-y-6" method="post">
+                            {% csrf_token %}
+                        <div>
+                            <label for="{{ form.email.field.widget.input_type }}" class="block mb-2 text-sm font-medium font-['Michroma'] text-gray-900 ">Your
+                                email</label>
+                            <input type="{{ form.email.field.widget.input_type }}" name="{{ form.email.name }}" id="{{form.email.auto_id}}"
+                                class="bg-gray-50 border font-['Montserrat'] border-gray-300 text-gray-900 sm:text-sm  focus:outline-[#FF8C1A] block w-full p-2.5 "
+                                placeholder="name@company.com" required="">
+                        </div>
+                        <div>
+                            <label for="{{form.username.auto_id}}" class="block mb-2 text-sm font-medium font-['Michroma'] text-gray-900 ">Username</label>
+                            <input type="{{ form.username.field.widget.input_type }}" name="{{ form.username.name }}" id="{{form.username.auto_id}}" placeholder="Username"
+                                class=" font-['Montserrat']  bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm  focus:outline-[#FF8C1A] block w-full p-2.5 "
+                                required="">
+                        </div>
+                        <div>
+                            <label for="{{form.password1.auto_id}}"
+                                class="block mb-2 text-sm font-medium font-['Michroma'] text-gray-900 ">Password</label>
+                            <input type="{{ form.password1.field.widget.input_type }}" name="{{ form.password1.name }}" id="{{form.password1.auto_id}}" placeholder="••••••••"
+                                class=" font-['Montserrat']  bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm  focus:outline-[#FF8C1A] block w-full p-2.5 "
+                                required="">
+                        </div>
+                        <div>
+                            <label for="{{form.password2.auto_id}}"
+                                class="block mb-2 text-sm font-medium font-['Michroma'] text-gray-900 ">Confirm
+                                Password</label>
+                            <input type="{{ form.password2.field.widget.input_type }}" name="{{ form.password2.name }}" id="{{form.password2.auto_id}}" placeholder="••••••••"
+                                class=" font-['Montserrat']  bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm  focus:outline-[#FF8C1A] block w-full p-2.5 "
+                                required="">
+                        </div>
+    
+                        <button type="submit"
+                            class="w-full text-white bg-[#262626] hover:bg-[#000] font-['Michroma'] font-bold focus:outline-none focus:ring-primary-300 font-medium  text-sm px-5 py-2.5 text-center ">Sign-in</button>
+                        <p class="text-sm font-light text-gray-500 font-['Montserrat']">
+                            have an account ? <a href="{% url 'user:login' %}"class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login</a>
+                        </p>
+                        {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>{{field}}:{{error}}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
-</html>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet">
+</script>
+{% endblock %}

@@ -54,10 +54,10 @@ class CarData(models.Model):
 class CarImage(models.Model):
     car = models.ForeignKey(CarData, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='car_images/')
-
+    def __str__(self) -> str:
+        return self.car.carmodel.carmodel
 
 class City(models.Model):
     name = models.CharField(max_length=100, unique=True)
-
     def __str__(self):
         return self.name

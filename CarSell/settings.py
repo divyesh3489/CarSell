@@ -27,8 +27,7 @@ SECRET_KEY = 'django-insecure-_r@f#7z4@n^gb#!o7*q^a((m&a3(wx3^jojt8!-o93a2+xsv&j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [socket.gethostbyname(socket.gethostname()
-                                      ), 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [socket.gethostbyname(socket.gethostname()), 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
