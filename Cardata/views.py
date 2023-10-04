@@ -1,30 +1,35 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import Add_Car
-from .models import Carmodel, CarImage,CarData
+from .models import Carmodel, CarImage, CarData
+from django.views.generic.edit import CreateView
 from django.http import JsonResponse
 import pickle
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 import datetime
 # Create your views here.
+
 
 def index(request):
     cars = CarData.objects.all()
     return render(request, 'Cardata/index.html', {'cars': cars})
 
+
 def carform(request):
     form = Add_Car()
     if request.method == 'POST':
         form = Add_Car(request.POST, request.FILES)
+        form.instance.username = request.user
+        print(form.instance.username)
+        print(form.is_valid())
         if form.is_valid():
             form.save()
             car = form.save()
             for image in request.FILES.getlist('images'):
-                print(image)
                 CarImage.objects.create(car=car, image=image)
-            return render(request, 'Cardata/index.html')
+            return redirect("Cardata:index")
         else:
-            for image in request.FILES.getlist('images'):
-                print(image)
-            print("form is not valid")
+            print(form.errors)
     return render(request, 'Cardata/carform.html', {'form': form})
 
 
@@ -72,6 +77,7 @@ def get_price(request):
     print(data)
     return JsonResponse(list(data), safe=False)
 
-def car_detalis(reuqest,pk):
-    cars=CarData.objects.get(pk=pk)
-    return render(reuqest,'Cardata/details.html',{'cars':cars})
+
+def car_detalis(reuqest, pk):
+    cars = CarData.objects.get(pk=pk)
+    return render(reuqest, 'Cardata/details.html', {'cars': cars})

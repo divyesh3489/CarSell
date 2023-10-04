@@ -31,3 +31,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+
+class EmailVerificationToken(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, default=1)
+    token = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user

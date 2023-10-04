@@ -2,8 +2,8 @@
 
 {% block body %}
 <div>
-    <form class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4" data-carmodel-url="{% url 'ajax_load_model' %}"
-        method="post" enctype="multipart/form-data" id="cardataForm" data-price-url="{% url 'ajax_price_url' %}">
+    <form class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4" data-carmodel-url="{% url 'Cardata:ajax_load_model' %}"
+        method="post" enctype="multipart/form-data" id="cardataForm" data-price-url="{% url 'Cardata:ajax_price_url' %}">
         {% csrf_token %}
         <div class="mb-4">
             <label for="id_carIDE" class="block text-gray-700 text-sm font-bold mb-2">CarIDE Value:</label>

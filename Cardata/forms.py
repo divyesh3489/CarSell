@@ -17,10 +17,11 @@ class Add_Car(forms.ModelForm):
     class Meta:
         model = CarData
         fields = ['fuletype', "transmission", 'carmodel', 'carbrand', "carIDE",
-                  "caryear", "kilometers", "ownership", 'price', 'images', 'city']
+                  "caryear", "kilometers", "ownership", 'price', 'images', 'city','username']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['username'].required = False
         self.fields['fuletype'] = forms.ChoiceField(
             choices=fule, widget=forms.RadioSelect())
         self.fields['transmission'] = forms.ChoiceField(

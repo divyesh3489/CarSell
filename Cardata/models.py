@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from user.models import CustomUser
 from location_field.forms.plain import PlainLocationField
 
 IDE = [
@@ -9,7 +10,6 @@ KM = [
     ((i+1)*10000, (i+1)*10000) for i in range(0, 15)
 ]
 KM.insert(0, ('', ''))
-print(KM)
 year = [
     (i, i) for i in range(2013, datetime.datetime.now().year+1)
 ]
@@ -38,6 +38,7 @@ class Carmodel(models.Model):
 
 
 class CarData(models.Model):
+    username=models.ForeignKey(CustomUser,related_name="user",on_delete=models.CASCADE,default=1)
     carIDE = models.PositiveIntegerField(choices=IDE)
     caryear = models.IntegerField(
         default=datetime.datetime.now().year, choices=year)
