@@ -1,0 +1,72 @@
+{% extends 'Cardata/base.html' %}
+{% block body %}
+<script>
+    // carousel.js
+
+    const carousel = document.getElementById('carousel');
+    const carouselInner = document.querySelector('.carousel-inner');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const items = document.querySelectorAll('.carousel-item');
+
+    let currentIndex = 0;
+
+    // Function to update the carousel display
+    function updateCarousel() {
+        items.forEach((item, index) => {
+            if (index === currentIndex) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    // Function to go to the previous slide
+    function prevSlide() {
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = items.length - 1;
+        }
+        updateCarousel();
+    }
+
+    // Function to go to the next slide
+    function nextSlide() {
+        currentIndex++;
+        if (currentIndex >= items.length) {
+            currentIndex = 0;
+        }
+        updateCarousel();
+    }
+
+    // Event listeners for the previous and next buttons
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    // Initial display
+    updateCarousel();
+
+</script>
+<div class="container mx-auto mt-8">
+    <div class="relative">
+        <div id="carousel" class="carousel">
+            <div class="carousel-inner">
+                {% for i in cars.carimage_set.all %}
+                <div class="carousel-item">
+                    <img src="{{i.image.url}}" alt="Image {{forloop.counter}}" class="w-full h-64 object-cover">
+                </div>
+                {% endfor %}
+                <!-- Add more images here -->
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#" role="button" id="prevBtn">
+            <span class="carousel-control-icon">&lt;</span>
+        </a>
+        <a class="carousel-control-next" href="#" role="button" id="nextBtn">
+            <span class="carousel-control-icon">&gt;</span>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

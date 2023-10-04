@@ -1,0 +1,225 @@
+{% extends 'Cardata/base.html' %}
+
+{% block body %}
+<div>
+    <form class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4" data-carmodel-url="{% url 'ajax_load_model' %}"
+        method="post" enctype="multipart/form-data" id="cardataForm" data-price-url="{% url 'ajax_price_url' %}">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="id_carIDE" class="block text-gray-700 text-sm font-bold mb-2">CarIDE Value:</label>
+            <select name="carIDE" required id="id_carIDE"
+                class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                {% for id, IDE in form.carIDE.field.choices %}
+                {% if not id %}
+                <option value="{{ id }}" hidden selected>Select IDE Value</option>
+                {% elif id == 1000000 %}
+                <option value="{{ id }}">{{ IDE }}L+</option>
+                {% else %}
+                <option value="{{ id }}">{{ IDE|add:-1 }}L -- {{IDE}}L</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="id_carbrand" class="block text-gray-700 text-sm font-bold mb-2">Carbrand:</label>
+            <select name="carbrand" required id="id_carbrand"
+                class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                {% for id, name in form.carbrand.field.choices %}
+                {% if not id %}
+                <option value="{{ id }}" hidden selected>Select CarBrnad</option>
+                {% else %}
+                <option value="{{ id }}">{{ name }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="id_carmodel" class="block text-gray-700 text-sm font-bold mb-2">Carmodel:</label>
+            <select name="carmodel" required id="id_carmodel"
+                class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                {% for id, name in form.carmodel.field.choices %}
+                <option value="{{ id }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="id_caryear" class="block text-gray-700 text-sm font-bold mb-2">Carbrand:</label>
+            <select name="caryear"
+                class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required id="id_caryear">
+
+                {% for id, year in form.caryear.field.choices %}
+                {% if not id %}
+                <option value="{{ id }}" hidden selected>Select year</option>
+                {% else %}
+                <option value="{{ id }}">{{ year }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <lable class="block text-gray-700 text-sm font-bold mb-2">{{ form.fuletype.label }}</lable>
+            <ul class="grid w-full gap-6 sm:grid-cols-3">
+                {% for choice_value, choice_label in form.fuletype.field.choices %}
+                <li>
+                    <input type="{{ form.fuletype.field.widget.input_type }}" name="{{ form.fuletype.name }}"
+                        value="{{ choice_value }}" id="id_fuletype_{{ forloop.counter|add:-1 }}" class="hidden peer">
+                    <label for="id_fuletype_{{ forloop.counter|add:-1 }}"
+                        class="inline-flex items-center justify-between w-full p-5 text-white-500 bg-white border border-white-200 rounded-lg cursor-pointer dark:hover:text-white-300 dark:border-white-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-white-600 hover:bg-white-100 dark:text-white-400 dark:bg-white-800 dark:hover:bg-white-700">
+                        <div class="block">
+                            <div class="w-full text-lg font-semibold">{{ choice_label }}</div>
+                        </div>
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">{{ form.fuletype.label }}:</label>
+            <ul class="grid w-full gap-6 sm:grid-cols-3">
+                {% for choice_value, choice_label in form.transmission.field.choices %}
+                <li>
+                    <input type="{{ form.transmission.field.widget.input_type }}" name="{{ form.transmission.name }}"
+                        value="{{ choice_value }}" id="id_transmission_{{ forloop.counter|add:-1 }}"
+                        class="hidden peer">
+                    <label for="id_transmission_{{ forloop.counter|add:-1 }}"
+                        class="inline-flex items-center justify-between w-full p-5 text-white-500 bg-white border border-white-200 rounded-lg cursor-pointer dark:hover:text-white-300 dark:border-white-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-white-600 hover:bg-white-100 dark:text-white-400 dark:bg-white-800 dark:hover:bg-white-700">
+                        <div class="block">
+                            <div class="w-full text-lg font-semibold">{{ choice_label }}</div>
+                        </div>
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="mb-4">
+            <label for="id_kilometers" class="block text-gray-700 text-sm font-bold mb-2">kilometers driven:</label>
+            <select name="kilometers"
+                class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required id="id_kilometers">
+                {% for id, KM in form.kilometers.field.choices %}
+                {% if not id %}
+                <option value="{{ id }}" hidden selected>Select KM</option>
+                {% else %}
+                <option value="{{ id }}">{{KM|add:-10000}}KM-{{ KM }}KM</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="id_ownership" class="block text-gray-700 text-sm font-bold mb-2">Ownership:</label>
+            <select name="ownership"
+                class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required id="id_ownership">
+                {% for id, owner in form.ownership.field.choices %}
+                {% if not id %}
+                <option value="{{ id }}" hidden selected>Select Ownership</option>
+                {% elif id == "dealer" %}
+                <option value="{{ id }}">{{ owner }}</option>
+                {% else %}
+                <option value="{{ id }}">{{ owner }} Owner</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-4">
+            <label for="id_city" class="block text-gray-700 text-sm font-bold mb-2">City:</label>
+            {{form.city}}
+        </div>
+        <div id="price" class="mb-4">
+            <input type="button" value="Get Value" id="get_price"
+                class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded ">
+        </div>
+        <!-- <input type="submit" value="submit"> -->
+
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>
+    $('#id_carbrand').change(function () {
+        const url = $('#cardataForm').attr('data-carmodel-url')
+        const carbrandID = $(this).val()
+        console.log(carbrandID)
+        $.ajax({
+            url: url,
+            data: {
+                'carbarnd_id': carbrandID
+            },
+            success: function (data) {
+                console.log(data)
+                let html_data = '<option selected value hidden>Select CarModel</option>'
+                data.forEach(function (model) {
+                    html_data += `<option value="${model.id}">${model.carmodel}</option>`
+                })
+                console.log(html_data)
+                $("#id_carmodel").html(html_data)
+            }
+        })
+    })
+    $('#get_price').click(
+        function () {
+            const url = $('#cardataForm').attr('data-price-url')
+            const caride = $("#id_carIDE").val()
+            const caryear = $("#id_caryear").val()
+            const carmodel = $("#id_carmodel").val()
+            const carfule = $("input[name='fuletype']:checked").val();
+            const cartrans = $("input[name='transmission']:checked").val()
+            const carkm = $("#id_kilometers").val()
+            const carowner = $("#id_ownership").val()
+            console.log(carfule)
+            if (caride !== '' && caryear !== '' && carmodel !== '' && carfule !== undefined && cartrans !== undefined && carkm !== '' && carowner !== '') {
+                $.ajax(
+                    {
+                        url: url,
+                        data:
+                        {
+                            caride: caride,
+                            carfule: carfule,
+                            caryear: caryear,
+                            cartrans: cartrans,
+                            carkm: carkm,
+                            carowner: carowner,
+                        },
+                        success: function (data) {
+                            console.log(data)
+                            data = data * 100
+                            if (data > 0) {
+                                form_hrml = `<div class="mb-4"><label for='id_price' class="block text-gray-700 text-sm font-bold mb-2" >Car Price:</label><input  class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" type='number' required value=${data * 1000} id='id_price' name='price'></div><div class="mb-4"><label class="block text-gray-700 text-sm font-bold mb-2" for="multiple_files">Upload Car Images</label><input
+             class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500  focus:outline-none dark:bg-black-700 cursor-pointer "         
+                id="id_images" required type="file" name="images" multiple></div><div class="mb-4"><input type='submit'  class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded "value='submit'></div>`
+                            }
+                            else {
+                                alert("We can not predict your price")
+                                form_hrml = `<div class="mb-4"><label for='id_price' class="block text-gray-700 text-sm font-bold mb-2" >Car Price:</label><input  class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" type='number' required value="" id='id_price' name='price'></div>
+                                </div>
+                                <div class="mb-4"><label class="block text-gray-700 text-sm font-bold mb-2" for="multiple_files">Upload Car Images</label><input
+             class="bg-black-50 border border-white-300 text-black-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-black-700 dark:border-white-600 dark:placeholder-black-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500  focus:outline-none dark:bg-black-700 cursor-pointer "         
+                id="id_images" required type="file" name="images" multiple></div><div class="mb-4"><input type='submit'  class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded "value='submit'></div>`
+                            }
+                            $("#price").html(form_hrml)
+                        }
+                    }
+                )
+            }
+            else {
+                alert('please Enter all requied Field')
+            }
+        }
+    )
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVD8R6GhLSgcw6ZeZWoLvZN77SYBJgK_Q&libraries=places&callback=initap"></script>
+<script>
+    var input = document.getElementById('id_city');
+    var options = {
+            types: ['(cities)'],
+            componentRestrictions: { country: 'IN' }
+
+        };
+    console.log(options)
+    var autocomplete = new google.maps.places.Autocomplete(input,options);
+    console.log(autocomplete)
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'Cardata/base.html' %}
+
+{% block body %}
+<div class="container mx-auto p-8">
+    <h2 class="text-3xl font-semibold mb-4">Car Listings</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for car in cars %}
+        <div class="bg-white rounded-lg shadow-md p-4">
+            <h3 class="text-xl font-semibold mb-2">{{ car.carbrand }} {{ car.carmodel }}</h3>
+            <p>Year: {{ car.caryear }}</p>
+            <p>Price: ₹{{ car.price }}</p>
+            <div class="mt-4">
+                
+                <img class="w-full" src="{{ car.carimage_set.first.image.url}}" alt="Car Image">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
