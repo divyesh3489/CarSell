@@ -1,21 +1,128 @@
 {% extends 'Cardata/base.html' %}
-
+{% load static %}
 {% block body %}
-<div class="container mx-auto p-8">
-    <h2 class="text-3xl font-semibold mb-4">Car Listings</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {% for car in cars %}
-        <div class="bg-white rounded-lg shadow-md p-4">
-            <h3 class="text-xl font-semibold mb-2">{{ car.carbrand }} {{ car.carmodel }}</h3>
-            <p>Year: {{ car.caryear }}</p>
-            <p>Price: ₹{{ car.price }}</p>
-            <div class="mt-4">
-                
-                <img class="w-full" src="{{ car.carimage_set.first.image.url}}" alt="Car Image">
+<div class="">
+    <div id="default-carousel" class="relative w-full" data-carousel="slide">
+        <!-- Carousel wrapper -->
+        <div class="relative h-56 overflow-hidden   md:h-[500px]">
+            <!-- Item 1 -->
+            <div class="hidden duration-700 ease-in-out bg-black" data-carousel-item>
+                <img src="{% static 'Cardata/carousal/db2023au00397-large-6478ab19a49c5 1.jpg' %}"
+                    class="absolute block w-100 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            </div>
+            <!-- Item 2 -->
+            <div class="hidden duration-700 ease-in-out bg-black" data-carousel-item>
+                <img src="{% static 'Cardata/carousal/skoda 2 1.jpg' %}"
+                    class="absolute block w-100 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            </div>
+            <!-- Item 3 -->
+            <div class="hidden duration-700 ease-in-out bg-black" data-carousel-item>
+                <img src="{% static 'Cardata/carousal/skoda kushq 1.jpg' %}"
+                    class="absolute block w-100 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            </div>
+            <!-- Item 4 -->
+            <div class="hidden duration-700 ease-in-out bg-black" data-carousel-item>
+                <img src="{% static 'Cardata/carousal/Tata-Nexon-4 1.jpg' %}"
+                    class="absolute block w-100 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             </div>
         </div>
-        {% endfor %}
+
+        <div class="z-30 flex space-x-3 -translate-x-full bottom-5 left-1/2">
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
+                data-carousel-slide-to="0"></button>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
+                data-carousel-slide-to="1"></button>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
+                data-carousel-slide-to="2"></button>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4"
+                data-carousel-slide-to="3"></button>
+        </div>
+
+        <button type="button"
+            class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+            data-carousel-prev>
+            <span
+                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 1 1 5l4 4" />
+                </svg>
+                <span class="sr-only">Previous</span>
+            </span>
+        </button>
+        <button type="button"
+            class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+            data-carousel-next>
+            <span
+                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 9 4-4-4-4" />
+                </svg>
+                <span class="sr-only">Next</span>
+            </span>
+        </button>
     </div>
 </div>
 
+</div>
+<div class="reviews font-['Montserrat'] mt-4">
+    <h2 class="text-2xl font-bold ms-10">Know more to choose better</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 m-10">
+        <div class="grid-cols-1 grid gap-10 lg:grid-cols-2">
+            <div class="flex justify-center">
+                <img src="{% static 'Cardata/cars/2018-Volkswagen-T-ROC-Revealed.jpg' %}" alt="" />
+            </div>
+            <div>
+                <h4 class="text-lg font-bold ">Lorem ipsum dolor sit amet.</h3>
+                    <p class="text-justify text-base">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam
+                        enim voluptatum maxime sunt saepe architecto voluptate, quae
+                        voluptas iure quasi!
+                    </p>
+            </div>
+        </div>
+        <div class="grid-cols-1 grid gap-10 lg:grid-cols-2">
+            <div class="flex justify-center">
+                <img src="{% static 'Cardata/cars/20230104035651_Kia_sorento_SUV 1.jpg' %}" alt="" />
+            </div>
+            <div>
+                <h4 class="text-lg font-bold ">Lorem ipsum dolor sit amet.</h3>
+                    <p class="text-justify text-base">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam
+                        enim voluptatum maxime sunt saepe architecto voluptate, quae
+                        voluptas iure quasi!
+                    </p>
+            </div>
+        </div>
+        <div class="grid-cols-1 grid gap-10 lg:grid-cols-2">
+            <div class="flex justify-center">
+                <img src="{% static 'Cardata/cars/front-left-side-47 (1).jpg' %}" alt="" />
+            </div>
+            <div>
+                <h4 class="text-lg font-bold ">Lorem ipsum dolor sit amet.</h3>
+                    <p class="text-justify text-base">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam
+                        enim voluptatum maxime sunt saepe architecto voluptate, quae
+                        voluptas iure quasi!
+                    </p>
+            </div>
+        </div>
+        <div class="grid-cols-1 grid gap-10 lg:grid-cols-2">
+            <div class="flex justify-center">
+                <img src="{% static 'Cardata/cars/grand-vitara-2022-maruti-5.jpg' %}" alt="" />
+            </div>
+            <div>
+                <h4 class="text-lg font-bold ">Lorem ipsum dolor sit amet.</h3>
+                    <p class="text-justify text-base">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam
+                        enim voluptatum maxime sunt saepe architecto voluptate, quae
+                        voluptas iure quasi!
+                    </p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
